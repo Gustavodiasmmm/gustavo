@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jogo de HTML e CSS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .game-container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 100%;
+      font-family: monospace;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    iframe {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    #feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>💻 Desafio de HTML e CSS</h1>
+    <h2 id="levelTitle">Nível 1</h2>
+    <p id="instruction">Desafio: Deixe o botão azul.</p>
+
+    <label>HTML:</label>
+    <textarea id="htmlInput" rows="6"></textarea>
+
+    <label>CSS:</label>
+    <textarea id="cssInput" rows="6"></textarea>
+
+    <div class="controls">
+      <button onclick="executarCodigo()">▶ Visualizar</button>
+      <button onclick="verificar()">✅ Verificar</button>
+      <button onclick="proximoNivel()">➡ Próximo Nível</button>
+    </div>
+
+    <iframe id="preview"></iframe>
+    <div id="feedback"></div>
+  </div>
+
+  <script>
+    const niveis = [
+      {
+        titulo: "Nível 1",
+        instrucao: "Desafio: Deixe o botão azul.",
+        htmlPadrao: `<button class="meu-botao">Clique aqui</button>`,
+        cssPadrao: `.meu-botao {
+  background-color: grey;
+  color: white;
+}`,
+        validacao: (doc) => {
+          const btn = doc.querySelector(".meu-botao");
+          const bg = getComputedStyle(btn).backgroundColor;
+          return bg === "rgb(0, 0, 255)";
+        }
+      },
+      {
+        titulo: "Nível 2",
+        instrucao: "Desafio: Adicione um parágrafo com o texto 'Olá, mundo!'.",
+        htmlPadrao: ``,
+        cssPadrao: ``,
+        validacao: (doc) => {
+          const p = doc.querySelector("p");
+          return p && p.textContent.includes("Olá, mundo");
+        }
+      },
+      {
+        titulo: "Nível 3",
+        instrucao: "Desafio: Centralize o texto usando Flexbox.",
+        htmlPadrao: `<div class="container">
+  <p>Texto centralizado</p>
+</div>`,
+        cssPadrao: `.container {
+  height: 100px;
+}`,
+        validacao: (doc) => {
+          const container = doc.querySelector(".container");
+          const style = getComputedStyle(container);
+          return style.display === "flex" && style.justifyContent === "center" && style.alignItems === "center";
+        }
+      }
+    ];
 
